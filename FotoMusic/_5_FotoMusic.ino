@@ -1,7 +1,7 @@
 // Termometro simples
 // Terceiro estudo arduino   -  30/08/2012
 
-const int sensor = A0;   // Sensor de Temepratura
+const int sensor = A0;   // Sensor de Luz
 const int totalLeds = 11;    // numero total de leds
 
 
@@ -37,12 +37,8 @@ void loop() {
         digitalWrite(ledPins[thisLed], LOW); 
       }
   }
-
-
 int nota = map(sensorReading, 60, 490, 440, 1760);
 tone(13,nota,200);
 float voltagem = map(sensorReading, 60, 490, 0, 5);;
-
 Serial.println (sensorReading);
-
 }
