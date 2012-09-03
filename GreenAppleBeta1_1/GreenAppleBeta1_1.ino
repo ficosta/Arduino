@@ -28,6 +28,7 @@ int pontuacaoVencedora = 7;
 int melodiaVenceu[] = {NOTE_C5, NOTE_B4, NOTE_C5, NOTE_G4, NOTE_GS4, NOTE_C5, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_G4 };
 int melodiaPerdeu[] = {NOTE_G4, NOTE_C5, NOTE_D5, NOTE_G5, NOTE_G4, NOTE_A4, NOTE_C5, NOTE_E5, NOTE_G4, NOTE_A4, NOTE_B4};
 int duracaoNota[] = {8, 8, 4, 4, 4, 8, 8, 4, 4, 4, 4 };
+byte statusButton = LOW;
 // ------------------------------------------------- //
 
 
@@ -57,29 +58,30 @@ void setup() {
 void loop() {
   
   while((partida <= 70) && (partida != 0) && (placar != pontuacaoVencedora)){
-    exibeDisplay(" Acerte a Verde! ", 10);
-    for (byte ledAtual = 0; ledAtual < totalLeds; ledAtual++) { // <-- Sequencia leds ...
+  exibeDisplay(" Acerte a Verde! ", 10);
+  for (byte ledAtual = 0; ledAtual < totalLeds; ledAtual++) { // <-- Sequencia leds ...
       digitalWrite(ledPins[ledAtual], HIGH);
-      if ((ledAtual == 3) && (digitalRead(buttonPin) == HIGH)){ // <-- Acerto do alvo
+      if ((ledAtual == 3) && ( statusButton == HIGH)){ // <-- Acerto do alvo
         placar++;
         acertou_alvo();
         velocidade=velocidade-25; // <-- Aumenta a dificuldade do acerto no alvo
       }
-      else if((ledAtual != 3) && (digitalRead(buttonPin) == HIGH)){ // <-- Erro do alvo
+      else if((ledAtual != 3) && ( statusButton == HIGH)){ // <-- Erro do alvo
         placar--;
         errou_alvo(ledAtual);
         velocidade=velocidade+25; // <-- Diminui a dificuldade do acerto no alvo
       }
       delay(velocidade);
+      statusButton = digitalRead(buttonPin);
       digitalWrite(ledPins[ledAtual], LOW);
-    } // fim do for()
+  } // fim do for()
     partida--;    
   } // fim do while 
   if (placar == pontuacaoVencedora) { // venceu o jogo 
     venceu_o_jogo();
     placar= 0;
     partida = 70;
-   } 
+  } 
   else {
     perdeu_o_jogo();
     placar=0;
@@ -114,7 +116,7 @@ void venceu_o_jogo(){
               // to calculate the note duration, take one second 
               // divided by the note type.
               //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-              int tempoNoBuzzer = 1000/ duracaoNota[thisNote];
+              int tempoNoBuzzer = 750 / duracaoNota[thisNote];
               tone(buzzerPin, melodiaVenceu[thisNote],tempoNoBuzzer);
               // to distinguish the notes, set a minimum time between them.
               // the note's duration + 30% seems to work well:
