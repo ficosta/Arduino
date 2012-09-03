@@ -60,19 +60,17 @@ void loop() {
     exibeDisplay(" Acerte a Verde! ", 10);
     for (byte ledAtual = 0; ledAtual < totalLeds; ledAtual++) { // <-- Sequencia leds ...
       digitalWrite(ledPins[ledAtual], HIGH);
-      delay(velocidade);
-      byte debouncingButton = digitalRead(buttonPin);
-      delay(5);
-      if ((ledAtual == 3) && (debouncingButton == HIGH)){ // <-- Acerto do alvo
+      if ((ledAtual == 3) && (digitalRead(buttonPin) == HIGH)){ // <-- Acerto do alvo
         placar++;
         acertou_alvo();
         velocidade=velocidade-25; // <-- Aumenta a dificuldade do acerto no alvo
       }
-      else if((ledAtual != 3) && (debouncingButton == HIGH)){ // <-- Erro do alvo
+      else if((ledAtual != 3) && (digitalRead(buttonPin) == HIGH)){ // <-- Erro do alvo
         placar--;
         errou_alvo(ledAtual);
         velocidade=velocidade+25; // <-- Diminui a dificuldade do acerto no alvo
       }
+      delay(velocidade);
       digitalWrite(ledPins[ledAtual], LOW);
     } // fim do for()
     partida--;    
