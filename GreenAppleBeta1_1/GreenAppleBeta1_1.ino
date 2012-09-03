@@ -22,7 +22,7 @@ byte buttonPin = A2; // Pino com witcher para os tiros do jogador A.
 // ------------------------------------------------- //
 // Variaveis globais
 int placar=0;
-int velocidade = 250;
+int velocidade = 220;
 byte partida = 70;
 int pontuacaoVencedora = 7;
 int melodiaVenceu[] = {NOTE_C5, NOTE_B4, NOTE_C5, NOTE_G4, NOTE_GS4, NOTE_C5, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_G4 };
@@ -57,18 +57,20 @@ void setup() {
 void loop() {
   
   while((partida <= 70) && (partida != 0) && (placar != pontuacaoVencedora)){
-    exibeDisplay(" Pegue a verde! ", 10);
+    exibeDisplay(" Acerte a Verde! ", 10);
     for (byte ledAtual = 0; ledAtual < totalLeds; ledAtual++) { // <-- Sequencia leds ...
       digitalWrite(ledPins[ledAtual], HIGH);
       delay(velocidade);
-      if ((ledAtual == 3) && (digitalRead(buttonPin) == HIGH)){ // <-- Acerto do alvo
+      byte debouncingButton = digitalRead(buttonPin);
+      delay(5);
+      if ((ledAtual == 3) && (debouncingButton == HIGH)){ // <-- Acerto do alvo
         placar++;
         acertou_alvo();
         velocidade=velocidade-25; // <-- Aumenta a dificuldade do acerto no alvo
       }
-      else if((ledAtual != 3) && (digitalRead(buttonPin) == HIGH)){ // <-- Erro do alvo
+      else if((ledAtual != 3) && (debouncingButton == HIGH)){ // <-- Erro do alvo
         placar--;
-        errou_alvo();
+        errou_alvo(ledAtual);
         velocidade=velocidade+25; // <-- Diminui a dificuldade do acerto no alvo
       }
       digitalWrite(ledPins[ledAtual], LOW);
@@ -182,29 +184,25 @@ delay(tempoExibicao);
 // ------------------------------------------------- //
 // Funcao com as acoes quando se acerta o alvo
 void acertou_alvo(){
-        tone(buzzerPin,1600,500);
-        exibeDisplay("PEGOU MAIS UMA!!", 10);
-        delay(1000);
+        tone(buzzerPin,1047,250);
+        exibeDisplay(" Pegou mas Uma ", 10);
+        delay(255);
         noTone(buzzerPin);
         digitalWrite(ledPins[3], HIGH);
-        delay(200);
+        delay(255);
         digitalWrite(ledPins[3], LOW);
-        delay(200);
-        digitalWrite(ledPins[3], HIGH);
-        delay(100);
-        digitalWrite(ledPins[3], LOW);
-        delay(100);
-        digitalWrite(ledPins[3], HIGH);
-        delay(50);
-        digitalWrite(ledPins[3], LOW);
-        delay(50);
-        digitalWrite(ledPins[3], HIGH);
         delay(25);
+        digitalWrite(ledPins[3], HIGH);
+        delay(255);
         digitalWrite(ledPins[3], LOW);
-        delay(25);       
-        tone(buzzerPin,2300,100);
-        delay(120);
+        delay(25);         
+        tone(buzzerPin,1319,125);
+        delay(125);
         noTone(buzzerPin);
+        tone(buzzerPin,1568,125);
+        delay(125);
+        noTone(buzzerPin);
+        
      } 
 // ------------------------------------------------- //
 
@@ -214,10 +212,24 @@ void acertou_alvo(){
 
 // ------------------------------------------------- //
 // Funcao com as acoes quando se erra o alvo
-void errou_alvo(){
-        tone(buzzerPin,480,500);
+void errou_alvo(byte ledErrado){
+        tone(buzzerPin,880,400);
         exibeDisplay("* ERA VERMELHA *", 10);
-        delay(1000);
+        delay(410);
+        noTone(buzzerPin);
+        digitalWrite(ledPins[ledErrado], HIGH);
+        delay(255);
+        digitalWrite(ledPins[ledErrado], LOW);
+        delay(25);
+        digitalWrite(ledPins[ledErrado], HIGH);
+        delay(255);
+        digitalWrite(ledPins[ledErrado], LOW);
+        delay(25);            
+        tone(buzzerPin,698,250);
+        delay(255);
+        noTone(buzzerPin);
+        tone(buzzerPin,587,250);
+        delay(255);
         noTone(buzzerPin);
     } 
 // ------------------------------------------------- //
