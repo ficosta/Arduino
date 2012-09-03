@@ -28,12 +28,6 @@ int pontuacaoVencedora = 7;
 int melodiaVenceu[] = {NOTE_C5, NOTE_B4, NOTE_C5, NOTE_G4, NOTE_GS4, NOTE_C5, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_G4 };
 int melodiaPerdeu[] = {NOTE_G4, NOTE_C5, NOTE_D5, NOTE_G5, NOTE_G4, NOTE_A4, NOTE_C5, NOTE_E5, NOTE_G4, NOTE_A4, NOTE_B4};
 int duracaoNota[] = {8, 8, 4, 4, 4, 8, 8, 4, 4, 4, 4 };
-
-
-
-
-
-
 // ------------------------------------------------- //
 
 
