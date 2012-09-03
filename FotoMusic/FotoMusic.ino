@@ -1,4 +1,4 @@
-// Termometro simples
+// Termometro  com efeito simples
 // Terceiro estudo arduino   -  30/08/2012
 
 const int sensor = A0;   // Sensor de Luz
