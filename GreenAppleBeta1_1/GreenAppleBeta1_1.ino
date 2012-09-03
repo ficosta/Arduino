@@ -14,6 +14,7 @@ byte ledPins[] = {2, 3, 4, 5, 6, 7, 8};   // array com os pinos dos leds
 byte totalLeds = 7;    // numero total de leds
 byte buzzerPin = A0;  //Pino com o buzzer de sons
 byte buttonPin = A2; // Pino com witcher para os tiros do jogador A.
+// DECLARA VARIAVEL BOOL A =D
 // ------------------------------------------------- //
 
 
@@ -71,6 +72,13 @@ void loop() {
         errou_alvo(ledAtual);
         velocidade=velocidade+25; // <-- Diminui a dificuldade do acerto no alvo
       }
+      // VARIVEL TEMPO = TEMPO ATUAL
+      //WHILE(A){
+      //statusButton = digitalRead(buttonPin);
+      //IF TEMPO ATUAL > TEMPO + VELOCIDADE
+      //A = FALSE
+      //}
+
       delay(velocidade);
       statusButton = digitalRead(buttonPin);
       digitalWrite(ledPins[ledAtual], LOW);
